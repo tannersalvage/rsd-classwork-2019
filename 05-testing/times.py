@@ -16,11 +16,14 @@ def time_range(time0, time1, n=1, g=0):
 
 def overlap_time(observation1, observation2):
     overlap_time_array = []
-    for time_range0, time_range1 in observation1:
-        for time_range_a, time_range_b in observation2:
-            low = max(time_range0, time_range_a)
-            high = min(time_range1, time_range_b)
-            overlap_time_array.append((low, high))
+    for index, (time_range0, time_range1) in enumerate(observation1):
+        time_range_a, time_range_b = observation2[index]
+            # check if we are in the same interval
+        if time_range_a >= time_range1:
+            break
+        low = max(time_range0, time_range_a)
+        high = min(time_range1, time_range_b)
+        overlap_time_array.append((low, high))
     return overlap_time_array
 
 
