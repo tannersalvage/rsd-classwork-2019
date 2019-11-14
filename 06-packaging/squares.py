@@ -48,15 +48,23 @@ def convert_numbers(list_of_strings):
     # ...then convert each substring into a number
     return [float(number_string) for number_string in all_numbers]
 
-
+from argparse import ArgumentParser
 if __name__ == "__main__":
-    with open("numbers.txt", "r") as numbers_file:
+    parser = ArgumentParser()
+    parser.add_argument('--weights_file', '-w')
+    parser.add_argument('numbers_file')
+    args = parser.parse_args()
+    with open(args.numbers_file, "r") as numbers_file:
         numbers_strings = numbers_file.readlines()
-    # TODO Can we make this optional, so that we don't need a weights file?
-    with open("weights.txt", "r") as weights_file:
-        weight_strings = weights_file.readlines()
     numbers = convert_numbers(numbers_strings)
-    weights = convert_numbers(weight_strings)
+    # TODO Can we make this optional, so that we don't need a weights file?
+    if args.weights_file:
+        with open(args.weights_file, "r") as weights_file:
+            weight_strings = weights_file.readlines()
+        weights = convert_numbers(weight_strings)
+    else:
+        weights = [1] * len(numbers)
+        
     # TODO Can we add the option of computing the square root of this result?
     result = average_of_squares(numbers, weights)
     # TODO Can we write the result in a file instead of printing it?
