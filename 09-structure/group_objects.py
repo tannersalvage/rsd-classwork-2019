@@ -47,8 +47,13 @@ if __name__ == "__main__":
     my_group = Group()
     # ...then add the group members one by one...
     my_group.add_person("Jill", 26, "biologist")
+    my_group.add_person("Zalika", 24, "artist")
+    my_group.add_person("Nash", 34, "chef")
+
     # ...then their connections
     my_group.connect("Jill", "Zalika", "friend")
+    my_group.connect("Zalika", "Jill", "friend")
+    my_group.connect("Nash", "Zalika", "landlord")
 
     print("The group has {} members with an average age of {}".format(
         my_group.size(),
